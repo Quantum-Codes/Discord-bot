@@ -1,4 +1,4 @@
-#make pycord work by making guessimports = false in .replit
+#make pycord work by making guessimports = false in .replit yay
 import os
 import discord
 from keep_alive import keep_alive
