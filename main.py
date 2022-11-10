@@ -11,5 +11,9 @@ async def on_ready():
     print(f"{bot.user} is ready and online!")
 
 bot.load_extension("commands.general")
+bot.load_extension("commands.troll")
 keep_alive()
-bot.run(os.environ["token"])
+try:
+  bot.run(os.environ["token"])
+except discord.errors.HTTPException:
+  os.system("kill 1")

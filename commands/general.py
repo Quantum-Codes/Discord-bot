@@ -26,11 +26,11 @@ class general(discord.Cog):
   async def hello(self, ctx):
     await ctx.respond("Hey!")
 
-  @discord.slash_command(name="fact", description = "Tells a useless fact", guild_ids=guild_ids)
+  @discord.slash_command(name="fact", description = "Tells a useless fact")
   async def fact(self, ctx):
     await ctx.respond(_fact())
 
-  @discord.slash_command(name="coinflip", description = "Flips a virtual coin", guild_ids=guild_ids)
+  @discord.slash_command(name="coinflip", description = "Flips a virtual coin")
   async def flipcoin(self, ctx):
     heads_tails = ('Heads', 'Tails')
     choice = random.choice(heads_tails)
@@ -44,14 +44,14 @@ class general(discord.Cog):
     random_number = random.randint(num1, num2)
     await ctx.respond(str(random_number))
 
-  @discord.slash_command(name="joke", description="Tells a joke", guild_ids=guild_ids)
+  @discord.slash_command(name="joke", description="Tells a joke")
   @discord.option("type", description="Type of joke", choices=["general", "programming", "knock-knock"])
   async def joke(self, ctx, type:str="general"):
     res = _joke(type)
     if "error" in res:
-      await ctx.respond(f"{ctx.author.mention} {res}.\n type `!help joke` for info on command.")
+      await ctx.respond(f"{res}.\n type `!help joke` for info on command.")
     else:
-      await ctx.respond(f"{ctx.author.mention}\n{res[0]}\n{res[1]}")
+      await ctx.respond(f"{res[0]}\n{res[1]}")
 
 
 def setup(bot):
