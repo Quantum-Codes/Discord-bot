@@ -2,13 +2,19 @@
 import os
 import discord
 from keep_alive import keep_alive
+from components.buttons import SleepButton
 
 bot = discord.Bot()
 guild_ids = [871696913987162112]
 
 @bot.event
 async def on_ready():
-    print(f"{bot.user} is ready and online!")
+  print(f"{bot.user} is ready and online!")
+
+@bot.event
+async def on_message(message):
+  if bot.user.mentioned_in(message):
+    await message.reply("Why u pinged me? I was sleeping :( \n Make me sleep again", view=SleepButton())
 
 bot.load_extension("commands.general")
 bot.load_extension("commands.troll")
