@@ -1,5 +1,7 @@
 import discord
 
+#https://stackoverflow.com/questions/60745020/is-there-a-way-to-directly-stream-audio-from-a-youtube-video-using-youtube-dl-or EPIC ANSWER
+
 class voice(discord.Cog):
   guild_ids = [871696913987162112]
   def __init__(self, bot):
@@ -9,7 +11,10 @@ class voice(discord.Cog):
   async def join(self, ctx):
     connected = ctx.author.voice
     if connected:
-      await connected.channel.connect()
+      if ctx.voice_client:
+        await ctx.voice_client.move_to(connected.channel)
+      else:
+        await connected.channel.connect()
       await ctx.respond("Joined voice channel")
     else:
       await ctx.respond("Join a voice channel first! Then run this command.")
