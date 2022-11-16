@@ -43,12 +43,14 @@ class voice(discord.Cog):
 
   @discord.slash_command(name="play", description = "play a YouTube song with url (later search will exist)", guild_ids=guild_ids)
   async def play(self, ctx, url:str):
-    if ctx.voice_client:
-      music = get_video(url)
-      FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}#no idea what's this
-      ctx.voice_client.play(discord.FFmpegPCMAudio(music["stream_url"], **FFMPEG_OPTIONS)) #double asterisk why
-    else:
-      await ctx.respond("Join a voice channel, then use /join andthen use this command to play. Later version: I will join automatically when /play")
+    FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
+    YDL_OPTIONS = {'format': 'bestaudio'}
+    voice = ctx.voice_client
+    with youtube_dl.YoutubeDL(YDL_OPTIONS) as ydl:
+      info = ydl.extract_info(url, download=False)
+      url2 = info['formats'][0]['url']
+      discord.opus.load_opus("./libopus.so.0.8.0")
+      voice.play(discord.FFmpegPCMAudio(url2, **FFMPEG_OPTIONS))
 
 
 
