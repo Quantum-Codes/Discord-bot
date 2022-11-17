@@ -3,7 +3,7 @@ import discord, youtube_dl
 #https://stackoverflow.com/questions/60745020/is-there-a-way-to-directly-stream-audio-from-a-youtube-video-using-youtube-dl-or EPIC ANSWER
 
 def get_video(url):
-  ydl_opts = {'format': 'bestaudio/best', 'restrictfilenames': True, 'noplaylist': True, 'nocheckcertificate': True, 'ignoreerrors': False, 'logtostderr': False, 'quiet': True, 'no_warnings': True, 'default_search': 'auto', 'source_address': '0.0.0.0'}
+  ydl_opts = {'format': 'bestaudio/best', 'restrictfilenames': True, 'noplaylist': True, 'nocheckcertificate': True, 'ignoreerrors': False, 'logtostderr': False, 'quiet': True, 'no_warnings': True, 'default_search': 'auto', 'source_address': '0.0.0.0','force-ipv4': True, 'cachedir': False}
   with youtube_dl.YoutubeDL(ydl_opts) as ydl:
      song_info = ydl.extract_info(url, download=False)
 
@@ -23,15 +23,16 @@ class voice(discord.Cog):
   
   @discord.slash_command(name="join", description ="Join voice channel", guild_ids=guild_ids)
   async def join(self, ctx):
+    await ctx.defer()
     connected = ctx.author.voice
     if connected:
       if ctx.voice_client:
         await ctx.voice_client.move_to(connected.channel)
       else:
         await connected.channel.connect()
-      await ctx.respond("Joined voice channel")
+      await ctx.followup.send("Joined voice channel")
     else:
-      await ctx.respond("Join a voice channel first! Then run this command.")
+      await ctx.followup.send("Join a voice channel first! Then run this command.")
 
   @discord.slash_command(name="leave", description="Leave the voice channel", guild_ids=guild_ids)
   async def leave(self, ctx):
@@ -54,7 +55,10 @@ class voice(discord.Cog):
     video = get_video(url)
     discord.opus.load_opus("./libopus.so.0.8.0")
     ctx.voice_client.play(discord.FFmpegPCMAudio(video["stream_url"], **FFMPEG_OPTIONS))
-    await ctx.followup.send("playing song")
+    embed=discord.Embed(title=f"Playing: {video['title']}", url=video['webpage_url'], description=video['description'], color=0xff0000)
+    embed.set_thumbnail(url=video["thumbnail"]) 
+    embed.set_footer(text=f"Views: {video['view_count']}")
+    await ctx.followup.send(embed=embed)
 
   @discord.slash_command(name="stop", description="Stops any playing sound", guild_ids=guild_ids)
   async def stop(self, ctx):
