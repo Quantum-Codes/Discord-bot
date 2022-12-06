@@ -1,6 +1,9 @@
-import discord, youtube_dl
+import discord, youtube_dl, re
+from components.buttons import PlayButton
 
 #https://stackoverflow.com/questions/60745020/is-there-a-way-to-directly-stream-audio-from-a-youtube-video-using-youtube-dl-or EPIC ANSWER
+
+link = re.compile("^(https:\/\/((www\.youtube\.com)|(youtu\.be))\/((watch\?v=)|())[a-zA-Z0-9]{11}$)") #created, tested on epic site https://regex101.com/r/zdMkMw/1
 
 async def join(ctx):
   if ctx.voice_client:
@@ -47,20 +50,27 @@ class voice(discord.Cog):
   @discord.slash_command(name="play", description = "play a YouTube song with url (later search will exist)", guild_ids=guild_ids)
   async def play(self, ctx, url:str):
     await ctx.defer()
+
+    if ctx.author.voice:
+      await join(ctx)
+    else:
+      await ctx.followup.send("First join a voice channel.")
+      return
+
+
     FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
-    """
-    voice = ctx.voice_client
-    with youtube_dl.YoutubeDL(YDL_OPTIONS) as ydl:
-      info = ydl.extract_info(url, download=False)
-      url2 = info['formats'][0]['url']
-      """
+    
+    if not link.match(url):
+      await ctx.followup.send("Seems like an invalid YouTube video link.. If it isn't, then contact my developer. \n Links are usually of the format: \n`https://youtu.be/<id>`\n`https://www.youtube.com/watch?v=<id>`\n`https://www.youtube.com/watch?v=<id>`")
+      return 
+
     video = get_video(url)
     discord.opus.load_opus("./libopus.so.0.8.0")
     ctx.voice_client.play(discord.FFmpegPCMAudio(video["stream_url"], **FFMPEG_OPTIONS))
     embed=discord.Embed(title=f"Playing: {video['title']}", url=video['webpage_url'], description=video['description'][:500], color=0xff0000)
     embed.set_thumbnail(url=video["thumbnail"]) 
     embed.set_footer(text=f"Views: {video['view_count']}")
-    await ctx.followup.send(embed=embed)
+    await ctx.followup.send(embed=embed, view = PlayButton())
 
   @discord.slash_command(name="stop", description="Stops any playing sound", guild_ids=guild_ids)
   async def stop(self, ctx):
@@ -70,7 +80,21 @@ class voice(discord.Cog):
     else:
       await ctx.respond("I don't think I'm in any voice channel.")
 
+  @discord.slash_command(name="pause", description ="pauses any playing sound", guild_ids=guild_ids)
+  async def pause(self, ctx):
+    if ctx.voice_client:
+      ctx.voice_client.pause()
+      await ctx.respond("Paused any music")
+    else:
+      await ctx.respond("I don't think I'm in any voice channel.")
 
+  @discord.slash_command(name="resume", description ="resumes any paused sound",  guild_ids=guild_ids)
+  async def resume(self, ctx):
+    if ctx.voice_client:
+      ctx.voice_client.resume()
+      await ctx.respond("Resumed music")
+    else:
+      await ctx.respond("I don't think I'm in any voice channel.")
 
 
 def setup(bot):
