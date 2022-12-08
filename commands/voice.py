@@ -3,7 +3,8 @@ from components.buttons import PlayButton
 
 #https://stackoverflow.com/questions/60745020/is-there-a-way-to-directly-stream-audio-from-a-youtube-video-using-youtube-dl-or EPIC ANSWER
 
-link = re.compile("^(https:\/\/((www\.youtube\.com)|(youtu\.be))\/((watch\?v=)|())[a-zA-Z0-9]{11}$)") #created, tested on epic site https://regex101.com/r/zdMkMw/1
+regex = "^(https:\/\/((www\.youtube\.com)|(youtu\.be))\/((watch\?v=)|())[a-zA-Z0-9]{11}$)"
+link = re.compile(regex) #created, tested on epic site https://regex101.com/r/zdMkMw/1
 
 async def join(ctx):
   if ctx.voice_client:
@@ -66,6 +67,7 @@ class voice(discord.Cog):
 
     video = get_video(url)
     discord.opus.load_opus("./libopus.so.0.8.0")
+    ctx.voice_client.stop()
     ctx.voice_client.play(discord.FFmpegPCMAudio(video["stream_url"], **FFMPEG_OPTIONS))
     embed=discord.Embed(title=f"Playing: {video['title']}", url=video['webpage_url'], description=video['description'][:500], color=0xff0000)
     embed.set_thumbnail(url=video["thumbnail"]) 

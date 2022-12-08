@@ -19,6 +19,7 @@ async def on_message(message):
 bot.load_extension("commands.general")
 bot.load_extension("commands.troll")
 bot.load_extension("commands.voice")
+bot.load_extension("commands.menu")
 keep_alive()
 try:
   bot.run(os.environ["token"])
