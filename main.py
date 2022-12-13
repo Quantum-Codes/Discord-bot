@@ -1,4 +1,5 @@
 #make pycord work by making guessimports = false in .replit yay
+#also add pkgs.ffmpeg in replit.nix for voice
 import os
 import discord
 from keep_alive import keep_alive
