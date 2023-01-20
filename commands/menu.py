@@ -8,6 +8,7 @@ link = re.compile(regex)
 
 link = re.compile(regex.replace("$","").replace("^",""))
 
+# here's a fail attempt at playlists
 
 async def play(ctx, url, next):
   if ctx.author.voice:
