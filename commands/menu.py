@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import discord, re, json
 from commands.voice import regex, join, get_video
 from components.buttons import PlayButton
@@ -31,12 +32,6 @@ async def play(ctx, url, next):
 async def playall(ctx, videos):
   x = videos.pop(0)
   await play(ctx, x, next= lambda e: playall(ctx, videos))
-
-class menu(discord.Cog):
-  guild_ids = [871696913987162112]
-  def __init__(self, bot):
-    self.bot = bot
-  
   @discord.message_command(name="QueuePlay", guild_ids=guild_ids)
   async def linker(self, ctx, message):
     await ctx.defer()
@@ -63,6 +58,10 @@ class menu(discord.Cog):
 
     await ctx.respond("\n".join(x), ephemeral = True)
 
+  
+  @discord.message_command(name="linkfinder", guild_ids=guild_ids)
+  async def linker(self, ctx, message):
+    await ctx.respond(link.search(message.content))
     
 
 def setup(bot):
