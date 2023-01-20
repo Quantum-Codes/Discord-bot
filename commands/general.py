@@ -26,6 +26,14 @@ class general(discord.Cog):
   async def hello(self, ctx):
     await ctx.respond("Hey!")
 
+  @discord.slash_command(name = "avatar", description = "Display avatar of a user", guild_ids=guild_ids)
+  async def avatar(self, ctx, user: discord.User = None):
+    if user:
+      await ctx.respond(f"{user.avatar}")
+    else:
+      await ctx.respond(f"{ctx.author.avatar}")
+
+  
   @discord.slash_command(name="fact", description = "Tells a useless fact")
   async def fact(self, ctx):
     await ctx.respond(_fact())
@@ -52,6 +60,8 @@ class general(discord.Cog):
       await ctx.respond(f"{res}.\n type `!help joke` for info on command.")
     else:
       await ctx.respond(f"{res[0]}\n{res[1]}")
+
+  
 
 
 def setup(bot):
