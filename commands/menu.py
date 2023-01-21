@@ -1,5 +1,6 @@
 import discord, re, json
 from commands.voice import regex, join, get_video
+from commands.voice import play as voice
 from components.buttons import PlayButton
 
 regex = f"""{regex.replace("^","").replace("$","")}"""
@@ -64,15 +65,15 @@ class menu(discord.Cog):
 
   @discord.message_command(name="Play", guild_ids=guild_ids)
   async def linkerscan(self, ctx, message):
-    await ctx.defer()
+    #await ctx.defer()
     matches=[]
     print(message.content.strip().split())
     for I in message.content.strip().split():
       x = link.match(I)
       if x:
         matches.append(x.group(0))
-    await ctx.followup.send("**Playlist:\n**"+"\n".join(matches))
-    playall(ctx, matches)
+    #await ctx.followup.send("**Playlist:\n**"+"\n".join(matches))
+    await voice(ctx, matches[0], next=None)
 
     
 
