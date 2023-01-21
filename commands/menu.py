@@ -44,7 +44,7 @@ class menu(discord.Cog):
       x = link.match(I)
       if x:
         matches.append(x.group(0))
-    await ctx.followup.send("**Playlist:\n**"+"\n".join(matches))
+    await ctx.followup.send("**Playlist:**\n"+"\n".join(matches))
     playall(ctx, matches)
 
   @discord.message_command(name ="ScanEmbed", guild_ids =[1017417232952852550])
@@ -61,6 +61,18 @@ class menu(discord.Cog):
       pass
 
     await ctx.respond("\n".join(x), ephemeral = True)
+
+  @discord.message_command(name="Play", guild_ids=guild_ids)
+  async def linkerscan(self, ctx, message):
+    await ctx.defer()
+    matches=[]
+    print(message.content.strip().split())
+    for I in message.content.strip().split():
+      x = link.match(I)
+      if x:
+        matches.append(x.group(0))
+    await ctx.followup.send("**Playlist:\n**"+"\n".join(matches))
+    playall(ctx, matches)
 
     
 
