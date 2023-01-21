@@ -25,23 +25,29 @@ def get_video(url):
   video["stream_url"] = song_info["formats"][0]["url"]
   return video
 
-async def play(ctx, url:str, next=None, queue=None):
-  await ctx.defer()
+async def play(ctx, url:str, next=None, queue=None, primary=True):
+  if primary:
+    await ctx.defer()
+    respond = ctx.followup.send
+  else:
+    respond = ctx.send
+    await respond("entered voice function")
   if ctx.author.voice:
     await join(ctx)
   else:
-    await ctx.followup.send("First join a voice channel.")
+    await respond("First join a voice channel.")
     return
 
   FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
     
   if not link.match(url):
-    await ctx.followup.send("Seems like an invalid YouTube video link.. If it isn't, then contact my developer. \n Links are usually of the format: \n`https://youtu.be/<id>`\n`https://www.youtube.com/watch?v=<id>`\n`https://www.youtube.com/watch?v=<id>`")
+    await respond("Seems like an invalid YouTube video link.. If it isn't, then contact my developer. \n Links are usually of the format: \n`https://youtu.be/<id>`\n`https://www.youtube.com/watch?v=<id>`\n`https://www.youtube.com/watch?v=<id>`")
     return 
-
+  respond("getting video")
   video = get_video(url)
   discord.opus.load_opus("./libopus.so.0.8.0")
   ctx.voice_client.stop()
+  respond("started play")
   ctx.voice_client.play(discord.FFmpegOpusAudio(video["stream_url"], **FFMPEG_OPTIONS), after=next)
   
   embed=discord.Embed(title=f"Playing: {video['title']}", url=video['webpage_url'], description=video['description'][:500], color=0xff0000)
@@ -51,7 +57,7 @@ async def play(ctx, url:str, next=None, queue=None):
     msg = ""
   else:
     msg = "**Playlist:**\n"+"\n".join(queue)
-  await ctx.followup.send(msg, embed=embed, view = PlayButton())
+  await respond(msg, embed=embed, view = PlayButton())
 
 
 class voice(discord.Cog):

@@ -16,7 +16,7 @@ async def play_next(ctx, matches):
     return
   await ctx.send(f"Next song? {matches[0]}")
   loop = asyncio.get_running_loop()
-  await voice(ctx, matches[0], next = lambda e: asyncio.run_coroutine_threadsafe(play_next(ctx, matches), loop))
+  await voice(ctx, matches[0], primary=False, next = lambda e: asyncio.run_coroutine_threadsafe(play_next(ctx, matches), loop))
 
 
 class menu(discord.Cog):
