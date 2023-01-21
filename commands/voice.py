@@ -25,7 +25,7 @@ def get_video(url):
   video["stream_url"] = song_info["formats"][0]["url"]
   return video
 
-async def play(ctx, url:str, next=None):
+async def play(ctx, url:str, next=None, queue=None):
   await ctx.defer()
   if ctx.author.voice:
     await join(ctx)
@@ -47,7 +47,11 @@ async def play(ctx, url:str, next=None):
   embed=discord.Embed(title=f"Playing: {video['title']}", url=video['webpage_url'], description=video['description'][:500], color=0xff0000)
   embed.set_thumbnail(url=video["thumbnail"]) 
   embed.set_footer(text=f"Views: {video['view_count']}")
-  await ctx.followup.send(embed=embed, view = PlayButton())
+  if queue is None:
+    msg = ""
+  else:
+    msg = "**Playlist:**\n"+"\n".join(queue)
+  await ctx.followup.send(msg, embed=embed, view = PlayButton())
 
 
 class voice(discord.Cog):
