@@ -68,7 +68,7 @@ class voice(discord.Cog):
     video = get_video(url)
     discord.opus.load_opus("./libopus.so.0.8.0")
     ctx.voice_client.stop()
-    ctx.voice_client.play(discord.FFmpegPCMAudio(video["stream_url"], **FFMPEG_OPTIONS))
+    ctx.voice_client.play(discord.FFmpegOpusAudio(video["stream_url"], **FFMPEG_OPTIONS))
     embed=discord.Embed(title=f"Playing: {video['title']}", url=video['webpage_url'], description=video['description'][:500], color=0xff0000)
     embed.set_thumbnail(url=video["thumbnail"]) 
     embed.set_footer(text=f"Views: {video['view_count']}")

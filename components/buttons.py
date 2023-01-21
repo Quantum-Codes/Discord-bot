@@ -12,7 +12,6 @@ class SleepButton(discord.ui.View):
 class PlayButton(discord.ui.View):
     @discord.ui.button(label= None, style=discord.ButtonStyle.primary, emoji="⏸")
     async def button_callback(self, button, interaction):
-      print([i for i in str(button.emoji)])
       if str(button.emoji) == "⏸":
         button.emoji = "▶️"
         interaction.guild.voice_client.pause()
