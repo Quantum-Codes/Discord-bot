@@ -1,10 +1,8 @@
 import discord, re, json, asyncio
-from commands.voice import regex, join, get_video
+from commands.voice import regex
 from commands.voice import play as voice
-from components.buttons import PlayButton
 
 regex = f"""{regex.replace("^","").replace("$","")}"""
-#print(regex)
 link = re.compile(regex)
 link = re.compile(regex.replace("$","").replace("^",""))
 loop = asyncio.new_event_loop()
@@ -14,7 +12,6 @@ async def play_next(ctx, matches):
   matches.pop(0)
   if len(matches) == 0:
     return
-  await ctx.send(f"Next song? {matches[0]}")
   loop = asyncio.get_running_loop()
   await voice(ctx, matches[0], primary=False, next = lambda e: asyncio.run_coroutine_threadsafe(play_next(ctx, matches), loop))
 

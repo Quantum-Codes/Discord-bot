@@ -3,7 +3,7 @@ from components.buttons import PlayButton
 
 #https://stackoverflow.com/questions/60745020/is-there-a-way-to-directly-stream-audio-from-a-youtube-video-using-youtube-dl-or EPIC ANSWER
 
-regex = "^(https:\/\/((www\.youtube\.com)|(youtu\.be))\/((watch\?v=)|())[a-zA-Z0-9]{11}$)"
+regex = "^(https:\/\/((www\.youtube\.com)|(youtu\.be))\/((watch\?v=)|())[a-zA-Z0-9-]{11}$)"
 link = re.compile(regex) #created, tested on epic site https://regex101.com/r/zdMkMw/1
 
 async def join(ctx):
@@ -31,7 +31,6 @@ async def play(ctx, url:str, next=None, queue=None, primary=True):
     respond = ctx.followup.send
   else:
     respond = ctx.send
-    await respond("entered voice function")
   if ctx.author.voice:
     await join(ctx)
   else:
@@ -42,12 +41,9 @@ async def play(ctx, url:str, next=None, queue=None, primary=True):
     
   if not link.match(url):
     await respond("Seems like an invalid YouTube video link.. If it isn't, then contact my developer. \n Links are usually of the format: \n`https://youtu.be/<id>`\n`https://www.youtube.com/watch?v=<id>`\n`https://www.youtube.com/watch?v=<id>`")
-    return 
-  respond("getting video")
   video = get_video(url)
   discord.opus.load_opus("./libopus.so.0.8.0")
   ctx.voice_client.stop()
-  respond("started play")
   ctx.voice_client.play(discord.FFmpegOpusAudio(video["stream_url"], **FFMPEG_OPTIONS), after=next)
   
   embed=discord.Embed(title=f"Playing: {video['title']}", url=video['webpage_url'], description=video['description'][:500], color=0xff0000)
