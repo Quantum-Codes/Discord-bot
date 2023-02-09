@@ -78,7 +78,7 @@ class voice(discord.Cog):
     else:
       await ctx.respond("I'm not in a voice channel, use the /join command to make me join")
 
-  @discord.slash_command(name="play", description = "play a YouTube song with url (later search will exist)", guild_ids=guild_ids)
+  @discord.slash_command(name="play", description = "play a YouTube song with url (later search will exist)")
   async def playsong(self, ctx, url:str):
     await play(ctx, url)
     

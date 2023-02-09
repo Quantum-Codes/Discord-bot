@@ -1,14 +1,17 @@
 import discord, random, requests
 
+
 def _joke(typeofjoke):
-  x = requests.get(f"https://official-joke-api.appspot.com/jokes/{typeofjoke}/random")
+  x = requests.get(
+    f"https://official-joke-api.appspot.com/jokes/{typeofjoke}/random")
   if x.status_code != 200:
     return "An error has occurred. please try again later."
   x = x.json()
   if len(x) == 0:
     return "An error has occurred. please try again later."
   x = x[0]
-  return [x["setup"],x["punchline"]]
+  return [x["setup"], x["punchline"]]
+
 
 def _fact():
   x = requests.get("https://uselessfacts.jsph.pl/random.json?language=en")
@@ -17,33 +20,33 @@ def _fact():
   else:
     return x.json()["text"]
 
+
 class general(discord.Cog):
   guild_ids = [871696913987162112]
+
   def __init__(self, bot):
     self.bot = bot
 
-  @discord.slash_command(name = "hello", description = "Say hello to the bot")
+  @discord.slash_command(name="hello", description="Say hello to the bot")
   async def hello(self, ctx):
     await ctx.respond("Hey!")
 
-  @discord.slash_command(name = "avatar", description = "Display avatar of a user", guild_ids=guild_ids)
+  @discord.slash_command(name="avatar", description="Display avatar of a user")
   async def avatar(self, ctx, user: discord.User = None):
     if user:
       await ctx.respond(f"{user.avatar}")
     else:
       await ctx.respond(f"{ctx.author.avatar}")
 
-  
-  @discord.slash_command(name="fact", description = "Tells a useless fact")
+  @discord.slash_command(name="fact", description="Tells a useless fact")
   async def fact(self, ctx):
     await ctx.respond(_fact())
 
-  @discord.slash_command(name="coinflip", description = "Flips a virtual coin")
+  @discord.slash_command(name="coinflip", description="Flips a virtual coin")
   async def flipcoin(self, ctx):
     heads_tails = ('Heads', 'Tails')
     choice = random.choice(heads_tails)
     await ctx.respond(f"You got a {choice}!")
-    
 
   @discord.slash_command(name="rand", description="Pick a random number")
   async def rand(self, ctx, num1: int = 0, num2: int = 10):
@@ -53,15 +56,15 @@ class general(discord.Cog):
     await ctx.respond(str(random_number))
 
   @discord.slash_command(name="joke", description="Tells a joke")
-  @discord.option("type", description="Type of joke", choices=["general", "programming", "knock-knock"])
-  async def joke(self, ctx, type:str="general"):
+  @discord.option("type",
+                  description="Type of joke",
+                  choices=["general", "programming", "knock-knock"])
+  async def joke(self, ctx, type: str = "general"):
     res = _joke(type)
     if "error" in res:
       await ctx.respond(f"{res}.\n type `!help joke` for info on command.")
     else:
       await ctx.respond(f"{res[0]}\n{res[1]}")
-
-  
 
 
 def setup(bot):
