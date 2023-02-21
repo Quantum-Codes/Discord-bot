@@ -3,7 +3,7 @@ from components.buttons import PlayButton
 
 #https://stackoverflow.com/questions/60745020/is-there-a-way-to-directly-stream-audio-from-a-youtube-video-using-youtube-dl-or EPIC ANSWER
 
-regex = "^(https:\/\/((www\.youtube\.com)|(youtu\.be))\/((watch\?v=)|())[a-zA-Z0-9-]{11}$)"
+regex = "^(https:\/\/((www\.youtube\.com)|(m\.youtube\.com)|(youtu\.be))\/((watch\?v=)|())[a-zA-Z0-9-_]{11}$)"
 link = re.compile(regex) #created, tested on epic site https://regex101.com/r/zdMkMw/1
 
 async def join(ctx):
@@ -13,7 +13,7 @@ async def join(ctx):
     await ctx.author.voice.channel.connect()
 
 def get_video(url):
-  ydl_opts = {'format': 'bestaudio/best', 'restrictfilenames': True, 'noplaylist': True, 'nocheckcertificate': True, 'ignoreerrors': False, 'logtostderr': False, 'quiet': True, 'no_warnings': True, 'default_search': 'auto', 'source_address': '0.0.0.0','force-ipv4': True, 'cachedir': False}
+  ydl_opts = {'format': 'bestaudio/best', 'restrictfilenames': True, 'noplaylist': True, 'nocheckcertificate': True, 'ignoreerrors': False, 'logtostderr': False, 'quiet': True, 'no_warnings': True, 'default_search': 'auto', 'source_address': '0.0.0.0','force-ipv4': True, 'cachedir': False, 'youtube_include_dash_manifest': False}
   with youtube_dl.YoutubeDL(ydl_opts) as ydl:
      song_info = ydl.extract_info(url, download=False)
 

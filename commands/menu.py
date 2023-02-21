@@ -43,6 +43,9 @@ class menu(discord.Cog):
       x = link.match(I)
       if x:
         matches.append(x.group(0))
+
+    if len(matches) == 0:
+      matches = ["invalid"]
     await voice(ctx, matches[0], next=None)
 
   @discord.message_command(name="Queued", guild_ids=guild_ids)
@@ -53,6 +56,8 @@ class menu(discord.Cog):
       if x:
         matches.append(x.group(0))
     
+    if len(matches) == 0:
+      matches = ["invalid"]
     loop = asyncio.get_running_loop()
     await voice(ctx, matches[0], next=lambda e: asyncio.run_coroutine_threadsafe(play_next(ctx, matches), loop), queue=matches)
 
