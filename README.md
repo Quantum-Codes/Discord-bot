@@ -28,6 +28,7 @@ token=<insert your token>
 2. Go to `replit.nix` and add `pkgs.ffmpeg` in
 3. Go to `.replit` and set `guessImports = false`, `run = "python main.py"`
 4. Run the repl
+5. Also to keep it online, you should probably use replit deployments or point a pinger to the webpage created by the program.
 
 # Converting to local commands 
 
