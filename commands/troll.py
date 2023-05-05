@@ -1,7 +1,7 @@
 import discord
+from main import guild_ids
 
 class troll(discord.Cog):
-  guild_ids = [871696913987162112]
   def __init__(self, bot):
     self.bot = bot
   

@@ -1,12 +1,16 @@
-#make pycord work by making guessimports = false in .replit yay
+#For replit only:
+#make pycord work by making guessimports = false in .replit
 #also add pkgs.ffmpeg in replit.nix for voice
+
+"""import dotenv  #uncomment here
+dotenv.load_dotenv()"""
 import os
 import discord
 from keep_alive import keep_alive
 from components.buttons import SleepButton
 
 bot = discord.Bot()
-guild_ids = [871696913987162112]
+guild_ids = [871696913987162112] #replace here
 
 @bot.event
 async def on_ready():

@@ -1,9 +1,8 @@
 import discord, random, requests
-
+from main import guild_ids
 
 def _joke(typeofjoke):
-  x = requests.get(
-    f"https://official-joke-api.appspot.com/jokes/{typeofjoke}/random")
+  x = requests.get(f"https://official-joke-api.appspot.com/jokes/{typeofjoke}/random")
   if x.status_code != 200:
     return "An error has occurred. please try again later."
   x = x.json()
@@ -22,8 +21,6 @@ def _fact():
 
 
 class general(discord.Cog):
-  guild_ids = [871696913987162112]
-
   def __init__(self, bot):
     self.bot = bot
 

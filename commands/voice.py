@@ -1,5 +1,6 @@
 import discord, youtube_dl, re
 from components.buttons import PlayButton
+from main import guild_ids
 
 #https://stackoverflow.com/questions/60745020/is-there-a-way-to-directly-stream-audio-from-a-youtube-video-using-youtube-dl-or EPIC ANSWER
 
@@ -57,7 +58,6 @@ async def play(ctx, url:str, next=None, queue=None, primary=True):
 
 
 class voice(discord.Cog):
-  guild_ids = [871696913987162112]
   def __init__(self, bot):
     self.bot = bot
   

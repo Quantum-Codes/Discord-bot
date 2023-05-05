@@ -1,6 +1,8 @@
 import discord, re, asyncio
 from commands.voice import regex
 from commands.voice import play as voice
+from main import guild_ids
+
 
 regex = f"""{regex.replace("^","").replace("$","")}"""
 link = re.compile(regex)
@@ -17,7 +19,6 @@ async def play_next(ctx, matches):
 
 
 class menu(discord.Cog):
-  guild_ids = [871696913987162112]
   def __init__(self, bot):
     self.bot = bot
 
