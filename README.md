@@ -21,5 +21,16 @@ This bot can:<br>
 token=<insert your token>
 ```
 7. Uncomment lines 4 and 5.
-8. Run `main.py`. It will take about 1 hour to register global commands to discord. You can replace content of `guild_ids` in `main.py` and add `guild_ids = guild_ids` in each decorator in `/commands` to convert them to local commands to run them immediately.
+8. Run `main.py`. It will take about 1 hour to register global commands to discord. If you need this to be instantaneous, then scroll down to "converting to local command"
+
+# Running on replit
+1. Create a python repl and in the shell git clone this repo.
+2. Go to `replit.nix` and add `pkgs.ffmpeg` in
+3. Go to `.replit` and set `guessImports = false`, `run = "python main.py"`
+4. Run the repl
+
+# Converting to local commands 
+
+You can replace content of `guild_ids` in `main.py` and add `guild_ids = guild_ids` in each decorator in `/commands` to convert them to local commands to run them immediately.
+
 Eg: `@discord.slash_command(name="hello")` --> `@discord.slash_command(name="hello", guild_ids=guild_ids)`
