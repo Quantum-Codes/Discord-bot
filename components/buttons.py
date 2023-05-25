@@ -23,7 +23,7 @@ class PlayButton(discord.ui.View):
     @discord.ui.button(label=None, style = discord.ButtonStyle.primary, emoji="⏹️")
     async def stop_button_callback(self, button, interaction):
       interaction.guild.voice_client.stop()
-      
-      for child in self.children:
-        child.disabled = True
+      #for child in self.children:
+      #  child.disabled = True
+      self.disable_all_items()
       await interaction.response.edit_message(view = self)
