@@ -4,5 +4,4 @@
 replit.nix
 /.config
 .breakpoints
-commands/__pycache__
-components/__pycache__
+**/__pycache__

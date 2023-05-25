@@ -43,7 +43,6 @@ async def play(ctx, url:str, next=None, queue=None, primary=True):
   if not link.match(url):
     await respond("Seems like an invalid YouTube video link.. If it isn't, then contact my developer. \n Links are usually of the format: \n`https://youtu.be/<id>`\n`https://www.youtube.com/watch?v=<id>`\n`https://www.youtube.com/watch?v=<id>`")
   video = get_video(url)
-  discord.opus.load_opus("./libopus.so.0.8.0")
   ctx.voice_client.stop()
   ctx.voice_client.play(discord.FFmpegOpusAudio(video["stream_url"], **FFMPEG_OPTIONS), after=next)
   
