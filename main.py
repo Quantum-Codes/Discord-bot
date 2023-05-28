@@ -21,6 +21,18 @@ async def on_message(message):
   if bot.user.mentioned_in(message):
     await message.reply("Why u pinged me? I was sleeping :( \n Make me sleep again", view=SleepButton())
 
+@bot.event
+async def on_voice_state_update(member, before, after):
+  if after.channel: #joined
+    if not bot.voice_cliennts: 
+      await after.channel.connect()
+  else: #left
+    if len(before.channel.members) < 2: #after is None. so use before.
+      for channel in bot.voice_clients:
+        if channel == before.channel:
+          await channel.disconnect()
+
+
 bot.load_extension("commands.general")
 bot.load_extension("commands.troll")
 bot.load_extension("commands.voice")
