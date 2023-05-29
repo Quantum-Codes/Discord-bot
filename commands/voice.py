@@ -105,10 +105,6 @@ class voice(discord.Cog):
     else:
       await ctx.respond("I don't think I'm in any voice channel.")
 
-  @discord.slash_command(name="test", description ="f")
-  async def okay(self, ctx):
-    await ctx.defer()
-    await ctx.followup.send("ab", view=PlayButton())
 
 def setup(bot):
   bot.add_cog(voice(bot))
