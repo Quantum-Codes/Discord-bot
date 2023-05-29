@@ -5,7 +5,9 @@ name: requirements_builder
 
 on:
   push:
-    branches: [ "main" ]
+    paths: # only if poetry updates
+      - 'pyproject.toml'
+      - 'poetry.lock'
 
 permissions:
   contents: write
