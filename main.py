@@ -1,13 +1,16 @@
 #For replit only:
-#make pycord work by making guessimports = false in .replit
+#make pycord work by making guessImports = false in .replit
 #also add pkgs.ffmpeg in replit.nix for voice
 
-"""import dotenv  #uncomment here
-dotenv.load_dotenv()"""
-import os
-import discord
+import discord, os
 from keep_alive import keep_alive
 from components.buttons import SleepButton
+
+if "REPL_SLUG" not in os.environ: #detect replit
+  import dotenv
+  dotenv.load_dotenv()
+  
+
 
 bot = discord.Bot()
 guild_ids = [871696913987162112] #replace here

@@ -12,7 +12,7 @@ This bot can:<br>
 </ol>
 
 # Running locally
-1. Download the code locally and install dependencies using poetry `poetry install`
+1. Download the code locally and install dependencies using poetry `poetry install` or using the `requirements.txt` file.
 2. Create a discord bot account using these [steps](https://discordpy.readthedocs.io/en/stable/discord.html).
 3. Additionally in the `https://discord.com/developers/applications/<application id>/bot` bot page, tick all 3 intents then regenerate token.
 4. Create a `.env` file
@@ -20,8 +20,7 @@ This bot can:<br>
 ```
 token=<insert your token>
 ```
-7. Uncomment lines 4 and 5.
-8. Run `main.py`. It will take about 1 hour to register global commands to discord. If you need this to be instantaneous, then scroll down to "converting to local command"
+7. Run `main.py`. It will take about 1 hour to register global commands to discord. If you need this to be instantaneous, then scroll down to "converting to local command"
 
 # Running on replit
 1. Create a python repl and in the shell git clone this repo.
