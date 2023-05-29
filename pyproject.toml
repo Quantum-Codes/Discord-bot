@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "python-template"
 version = "0.1.0"
-description = ""
+description = "idk"
 authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
