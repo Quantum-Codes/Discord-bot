@@ -29,7 +29,7 @@ async def on_voice_state_update(member, before, after):
   else: #left
     if len(before.channel.members) < 2: #after is None. so use before.
       for channel in bot.voice_clients:
-        if channel == before.channel:
+        if channel.channel == before.channel:
           await channel.disconnect()
 
 
