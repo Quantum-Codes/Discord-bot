@@ -24,7 +24,7 @@ async def on_message(message):
 @bot.event
 async def on_voice_state_update(member, before, after):
   if after.channel: #joined
-    if not bot.voice_cliennts: 
+    if not bot.voice_clients: 
       await after.channel.connect()
   else: #left
     if len(before.channel.members) < 2: #after is None. so use before.
