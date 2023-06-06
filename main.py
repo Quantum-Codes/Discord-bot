@@ -21,7 +21,7 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-  if bot.user.mentioned_in(message):
+  if bot.user.mentioned_in(message) and message.mentions: #message.mentions empty when @everyone 
     await message.reply("Why u pinged me? I was sleeping :( \n Make me sleep again", view=SleepButton())
 
 @bot.event
