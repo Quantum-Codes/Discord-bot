@@ -1,5 +1,6 @@
 import discord, random, requests
 from main import guild_ids
+from components.menus import selectmenu1
 
 def _joke(typeofjoke):
   x = requests.get(f"https://official-joke-api.appspot.com/jokes/{typeofjoke}/random")
@@ -26,7 +27,7 @@ class general(discord.Cog):
 
   @discord.slash_command(name="hello", description="Say hello to the bot")
   async def hello(self, ctx):
-    await ctx.respond("Hey!")
+    await ctx.respond("Hey!", view=selectmenu1())
 
   @discord.slash_command(name="avatar", description="Display avatar of a user")
   async def avatar(self, ctx, user: discord.User = None):
