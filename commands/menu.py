@@ -5,7 +5,6 @@ from main import guild_ids
 
 
 regex = f"""{regex.replace("^","").replace("$","")}"""
-link = re.compile(regex)
 link = re.compile(regex.replace("$","").replace("^",""))
 loop = asyncio.new_event_loop()
 asyncio.set_event_loop(loop) 
